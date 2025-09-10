@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  service_1:
+    build: ./Service1
+    ports:
+      - "8199:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

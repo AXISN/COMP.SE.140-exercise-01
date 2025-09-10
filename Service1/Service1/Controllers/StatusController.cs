@@ -15,9 +15,9 @@ public class StatusController : ControllerBase
 
     [HttpGet]
     [Route("status")]
-    public IActionResult GetStatus()
+    public async Task<IActionResult> GetStatus()
     {
-        var status = _statusService.GetStatus();
+        var status = await _statusService.GetStatus();
         return Ok(status);
     }
 }   

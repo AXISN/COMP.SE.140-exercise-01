@@ -41,6 +41,6 @@ public class StatusService : IStatusService
         var hourUptime = (now - _startTime).Hours;
         var freeSpace = DriveInfo.GetDrives().FirstOrDefault()?.AvailableFreeSpace / 1024 / 1024;
         
-        return $"{now.ToFileTime()}: uptime {hourUptime} hours, free disk in root: {freeSpace:N0} MBytes";
+        return $"{new DateTimeOffset(now.ToUniversalTime()).ToUnixTimeMilliseconds()}: uptime {hourUptime} hours, free disk in root: {freeSpace:N0} MBytes";
     }
 }

@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IStatusService, StatusService>();
+builder.Services.AddTransient<IService2Service, Service2Service>();
 
 var app = builder.Build();
 

@@ -1,9 +1,22 @@
 version: '3.8'
 
 services:
-  service_1:
+  service-1:
+    container_name: service-1
     build: ./Service1
     ports:
       - "8199:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - service-network
+    
+  service-2:
+    container_name: service-2
+    build: ./Service2
+    networks:
+      - service-network
+
+networks:
+  service-network:
+    driver: bridge

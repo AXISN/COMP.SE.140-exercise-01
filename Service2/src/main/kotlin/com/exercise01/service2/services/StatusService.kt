@@ -18,7 +18,7 @@ class StatusService : IStatusService {
 
         return String.format(
             "%s: uptime %01d hours, free disk in root: %,d MBytes",
-            now.toEpochMilli(),
+            now,
             uptimeHour,
             freeSpace
         )

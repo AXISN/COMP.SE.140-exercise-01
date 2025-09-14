@@ -7,21 +7,30 @@ public class StatusService : IStatusService
 {
     private readonly DateTime _startTime;
     
+    private readonly IStorageService _storageService;
     private readonly IService2Service _service2Service;
     private readonly ILogger<StatusService> _logger;
     
-    public StatusService(IService2Service service2Service,  ILogger<StatusService> logger)
+    public StatusService(
+        IStorageService storageService,
+        IService2Service service2Service, 
+        ILogger<StatusService> logger)
     {
         _startTime = DateTime.Now;
+        
+        _storageService = storageService;
         _service2Service = service2Service;
         _logger = logger;
     }
     
-    public async Task<string> GetStatus()
+    public async Task<string?> GetStatus()
     {
         try
         {
             var builder = new StringBuilder();
+            var status = GetInternalStatus();
+            
+            await _storageService.AddLog(status);
             builder.AppendLine(GetInternalStatus());
             var service2Status = await _service2Service.GetStatus();
             builder.Append(service2Status);

@@ -7,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IStatusService, StatusService>();
 builder.Services.AddTransient<IService2Service, Service2Service>();
+builder.Services.AddTransient<IStorageService, StorageService>();
 
 var app = builder.Build();
 

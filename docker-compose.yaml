@@ -15,6 +15,31 @@ services:
     networks:
       - service-network
 
+  storage:
+    container_name: storage
+    build: ./Storage
+    networks:
+      - service-network
+      - storage-network
+    depends_on:
+      - storage-db
+
+  storage-db:
+    container_name: storage-db
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: StorageDB
+      MYSQL_USER: StorageAPI
+      MYSQL_PASSWORD: SuperSecurePassw0rd
+    networks:
+      - storage-network
+    volumes:
+      - "./Storage/init.sql:/docker-entrypoint-initdb.d/1.sql"
+      - ./Storage/data:/var/lib/mysql
+
 networks:
   service-network:
+    driver: bridge
+  storage-network:
     driver: bridge

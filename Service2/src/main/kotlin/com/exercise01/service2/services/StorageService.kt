@@ -8,8 +8,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.springframework.stereotype.Service
+import java.io.File
 
 private const val BASE_URL: String = "http://storage:1234/"
+private const val V_STORAGE_LOG_PATH = "/app/data/log.txt"
 
 @Service
 class StorageService : IStorageService {
@@ -29,6 +31,27 @@ class StorageService : IStorageService {
             .post(jsonBody.toRequestBody("application/json".toMediaType()))
             .build()
 
-        client.newCall(request).execute()
+        try {
+            client.newCall(request).execute()
+            appendLogToVStorage(message)
+        } catch (e: Exception) {
+            println("Error adding log: ${e.message}")
+        }
+    }
+
+    private fun appendLogToVStorage(message: String) {
+        try {
+            val logFile = File(V_STORAGE_LOG_PATH)
+
+            logFile.parentFile?.mkdirs()
+
+            if (!logFile.exists()) {
+                logFile.createNewFile()
+            }
+
+            logFile.appendText(message + System.lineSeparator())
+        } catch (e: Exception) {
+            println("Failed to write log to volume storage: ${e.message}")
+        }
     }
 }

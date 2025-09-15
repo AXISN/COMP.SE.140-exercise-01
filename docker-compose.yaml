@@ -8,12 +8,21 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     networks:
       - service-network
+    volumes:
+      - ./vstorage:/app/data
+    depends_on:
+      - storage
+      - service-2
     
   service-2:
     container_name: service-2
     build: ./Service2
     networks:
       - service-network
+    volumes:
+      - ./vstorage:/app/data
+    depends_on:
+      - storage
 
   storage:
     container_name: storage
@@ -36,7 +45,10 @@ services:
       - storage-network
     volumes:
       - "./Storage/init.sql:/docker-entrypoint-initdb.d/1.sql"
-      - ./Storage/data:/var/lib/mysql
+      - storage-db-data:/var/lib/mysql
+
+volumes:
+  storage-db-data:
 
 networks:
   service-network:

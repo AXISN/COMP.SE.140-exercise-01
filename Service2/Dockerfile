@@ -13,6 +13,8 @@ WORKDIR /app
 
 COPY --from=build /app/build/libs/*.jar app.jar
 
+RUN mkdir -p /app/data && chmod 755 /app/data
+
 EXPOSE 5000
 
 CMD ["java", "-jar", "app.jar"]

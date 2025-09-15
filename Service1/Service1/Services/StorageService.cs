@@ -6,6 +6,8 @@ namespace Service1.Services;
 
 public class StorageService : IStorageService
 {
+    private const string VStorageLogPath = "/app/data/log.txt";
+    
     private readonly HttpClient _client;
     private readonly ILogger<StorageService> _logger;
     
@@ -48,6 +50,8 @@ public class StorageService : IStorageService
 
             var response = await _client.PostAsJsonAsync("logs", logEntry);
             response.EnsureSuccessStatusCode();
+            
+            AppendLogToVStorage(message);
         }
         catch (Exception ex)
         {
@@ -57,6 +61,20 @@ public class StorageService : IStorageService
 
     private void AppendLogToVStorage(string message)
     {
-        
+        try
+        {
+            var directory = Path.GetDirectoryName(VStorageLogPath);
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory!);
+            
+            if (!File.Exists(VStorageLogPath))
+                File.Create(VStorageLogPath).Close();
+            
+            File.AppendAllText(VStorageLogPath, message + Environment.NewLine);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to write log to volume storage");
+        }
     }
 }

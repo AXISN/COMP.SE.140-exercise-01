@@ -1,3 +1,4 @@
+name: exercise-01
 services:
   service-1:
     container_name: service-1

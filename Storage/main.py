@@ -39,7 +39,7 @@ def connect_to_database(max_retries=5):
 # Connect to database with retry logic
 mydb = connect_to_database()
 
-@app.get("/logs")
+@app.get("/log")
 def get_logs():
   try:
     cursor = mydb.cursor()
@@ -56,7 +56,7 @@ def get_logs():
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
 
-@app.post("/logs", status_code=201)
+@app.post("/log", status_code=201)
 def append_log(entry: AddLog):
   try:
     if entry.service != "Service1" and entry.service != "Service2":

@@ -27,7 +27,7 @@ class StorageService : IStorageService {
         val jsonBody = objectMapper.writeValueAsString(logEntry)
 
         val request: Request = Request.Builder()
-            .url(BASE_URL + "logs")
+            .url(BASE_URL + "log")
             .post(jsonBody.toRequestBody("application/json".toMediaType()))
             .build()
 

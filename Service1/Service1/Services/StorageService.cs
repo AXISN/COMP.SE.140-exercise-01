@@ -24,7 +24,7 @@ public class StorageService : IStorageService
     {
         try
         {
-            var response = await _client.GetAsync("logs");
+            var response = await _client.GetAsync("log");
             response.EnsureSuccessStatusCode();
             
             var logEntries = await response.Content.ReadFromJsonAsync<GetLogsResponse>();
@@ -48,7 +48,7 @@ public class StorageService : IStorageService
                 Service = "Service1"
             };
 
-            var response = await _client.PostAsJsonAsync("logs", logEntry);
+            var response = await _client.PostAsJsonAsync("log", logEntry);
             response.EnsureSuccessStatusCode();
             
             AppendLogToVStorage(message);

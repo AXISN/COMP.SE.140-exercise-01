@@ -10,7 +10,7 @@ services:
     networks:
       - service-network
     volumes:
-      - ./vstorage:/app/data
+      - ${PWD}/vstorage:/app/data/log.txt
     depends_on:
       - storage
       - service-2
@@ -21,7 +21,7 @@ services:
     networks:
       - service-network
     volumes:
-      - ./vstorage:/app/data
+      - ${PWD}/vstorage:/app/data/log.txt
     depends_on:
       - storage
 

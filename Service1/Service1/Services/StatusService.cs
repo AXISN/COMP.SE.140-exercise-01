@@ -47,9 +47,9 @@ public class StatusService : IStatusService
     private string GetInternalStatus()
     {
         var now = DateTime.Now.ToUniversalTime();
-        var hourUptime = (now - _startTime).Hours;
+        var hourUptime = (now - _startTime).TotalHours;
         var freeSpace = DriveInfo.GetDrives().FirstOrDefault()?.AvailableFreeSpace / 1024 / 1024;
         
-        return $"{now:O}: uptime {hourUptime} hours, free disk in root: {freeSpace:N0} MBytes";
+        return $"{now:yyyy-MM-ddTHH:mm:ssZ}: uptime {hourUptime:F2} hours, free disk in root: {freeSpace:N0} MBytes";
     }
 }

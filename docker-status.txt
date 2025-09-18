@@ -1,0 +1,12 @@
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+944945e6db8e   exercise-01-service-1   "dotnet Service1.dll"    37 seconds ago   Up 36 seconds   0.0.0.0:8199->8080/tcp, [::]:8199->8080/tcp   service-1
+10922afc25f3   exercise-01-service-2   "java -jar app.jar"      37 seconds ago   Up 36 seconds   5000/tcp                                      service-2
+88584703fff4   exercise-01-storage     "fastapi run main.py…"   37 seconds ago   Up 36 seconds   1234/tcp                                      storage
+e7f9b3165dba   mysql                   "docker-entrypoint.s…"   37 seconds ago   Up 37 seconds   3306/tcp, 33060/tcp                           storage-db
+
+NETWORK ID     NAME                          DRIVER    SCOPE
+0dbfd03d7ecc   bridge                        bridge    local
+7421ec7fa5bd   exercise-01_service-network   bridge    local
+19141f533e03   exercise-01_storage-network   bridge    local
+bb3064eeb023   host                          host      local
+b6c98893119f   none                          null      local
